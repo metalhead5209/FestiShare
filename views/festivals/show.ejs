@@ -2,6 +2,9 @@
 
     <h1><%= festival.title %> </h1>
     <h2><%= festival.location %> </h2>
+    <img src="<%= festival.image%>" alt="fest" class="img-thumbnail">
+    <p><%= festival.description%></p>
+    <p>$<%= festival.price %>/ticket</p>
     <footer>
         <p><a href="/festivals/<%=festival._id%>/edit">Edit</a></p>
         <p>

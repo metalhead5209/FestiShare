@@ -16,11 +16,16 @@ mongoose.connect(DB,
 const mix = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
-    for (let i = 0; i < 50; i++) {
+    await Festival.deleteMany({});
+    for (let i = 0; i < 41; i++) {
         const randThou = Math.floor(Math.random() * 1000);
+        const price = Math.floor(Math.random() *200) + 10;
         const fest = new Festival({
             location: `${cities[randThou].city}, ${cities[randThou].state}`,
-            title: `${mix(descriptors)} ${mix(places)}`
+            title: `${mix(descriptors)} ${mix(places)}`,
+            image: 'https://source.unsplash.com/collection/3155144',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio non soluta consequatur, quos ut aliquam. Aspernatur earum vero sequi, ut sapiente nihil enim explicabo, numquam incidunt accusamus quod possimus nulla.',
+            price
         })
         await fest.save();
     }
