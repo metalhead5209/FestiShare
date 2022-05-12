@@ -1,10 +1,13 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const ejsMate = require('ejs-mate');
 const Festival = require("./models/festival");
 const methodOverride = require("method-override");
 
 const app = express();
+
+
 
 // DB CONNECTION
 const DB = "mongodb://127.0.0.1:27017/festiShare";
@@ -16,13 +19,20 @@ mongoose.connect(
   (e) => console.error(e, "NO CONNECTION")
 );
 
+
+
 // VIEW ENGINE
+app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+
+
 
 // ROUTES
 app.get("/", (req, res) => {
@@ -66,6 +76,8 @@ app.delete("/festivals/:id", async (req, res) => {
   res.redirect('/festivals');
 });
 
+
+// PORT
 const PORT = 5252 || process.env.PORT;
 app.listen(PORT, () => {
   console.log("LISTENING ON PORT 5252");
