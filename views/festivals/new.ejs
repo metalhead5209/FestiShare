@@ -1,15 +1,35 @@
 <% layout('layouts/boilerplate') %> 
     
-        <form action="/festivals" method="POST">
-            <div>
-                <label for="title">Title</label>
-                <input type="text" id="title" name="festival[title]">
+       <div class="row">
+           <h1 class="text-center">New Festival</h1>
+           <div class="col-6 offset-3">
+            <form action="/festivals" method="POST">
+                <div>
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="festival[title]">
+                </div>
+                <div>
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="festival[location]">
+                </div>
+                <div>
+                    <label class="form-label" for="image">Image URL</label>
+                    <input class="form-control" type="text" id="Image" name="festival[image]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Festival Price</label>
+                <div class="input-group mb-2">
+                    <span class="input-group-text" id="price">$</span>
+                    <input type="text" class="form-control" placeholder="0.00" name="festival[price]">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="festival[description]"></textarea>
+                  </div>
             </div>
-            <div>
-                <label for="location">Location</label>
-                <input type="text" id="location" name="festival[location]">
-            </div>
-            <button>Add Festival</button>
-        </form>
-        <a href="/festivals">Back To Festivals</a>
+                <button class="btn btn-success mb-3">Add Festival</button>
+            </form>
+            <a class="btn btn-info" href="/festivals">Back To Festivals</a>
+           </div>
+       </div>
 

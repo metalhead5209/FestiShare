@@ -1,18 +1,19 @@
 <% layout('layouts/boilerplate') %> 
 
-    <h1><%= festival.title %> </h1>
+    <h1 class="mt-5"><%= festival.title %> </h1>
     <h2><%= festival.location %> </h2>
     <img src="<%= festival.image%>" alt="fest" class="img-thumbnail">
     <p><%= festival.description%></p>
     <p>$<%= festival.price %>/ticket</p>
+    
     <footer>
-        <p><a href="/festivals/<%=festival._id%>/edit">Edit</a></p>
+        <p><a class="btn btn-secondary" href="/festivals/<%=festival._id%>/edit">Edit</a></p>
         <p>
             <form action="/festivals/<%=festival._id%>?_method=DELETE" method="POST">
-                <button>Delete</button>
+                <button class="btn btn-danger">Delete</button>
             </form>
         </p>
-        <p><a href="/festivals">All Festivals</a></p>
+        <p><a class="btn btn-info" href="/festivals">All Festivals</a></p>
         
     </footer>
     
