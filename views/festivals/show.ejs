@@ -3,7 +3,7 @@
 
     <div class="row mt-5 mb-3">
         <div class="col-6 offset-3">
-            <div class="card">
+            <div class="card mb-4">
                 <img src="<%= festival.image%>" class="card-img-top" alt="fest">
                 <div class="card-body">
                   <h5 class="card-title"><%= festival.title %></h5>
@@ -18,11 +18,11 @@
                   <form action="/festivals/<%=festival._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
-                  <a href="/festivals" class="card-link btn btn-info">All Festivals</a>
                 </div>
                 <div class="card-footer text-muted">
                     2 days ago
                 </div>
+                <a href="/festivals" class="card-link btn btn-info">All Festivals</a>
               </div>
             
         </div>
