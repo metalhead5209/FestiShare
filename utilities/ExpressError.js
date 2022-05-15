@@ -5,3 +5,5 @@ class ExpressError extends Error {
         this.statCode = statCode;
     }
 };
+
+module.exports = ExpressError;

@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const asyncWrap = require('./utilities/AsyncWrap');
+const ExpressError = require('./utilities/ExpressError');
 const ejsMate = require('ejs-mate');
 const Festival = require("./models/festival");
 const methodOverride = require("method-override");
@@ -50,6 +51,7 @@ app.get("/festivals/new", (req, res) => {
 });
 
 app.post("/festivals", asyncWrap(async (req, res) => {
+  if (!req.body.festivals) throw new ExpressError('Invalid Campground Data', 400) 
   const festival = new Festival(req.body.festival);
   await festival.save();
   res.redirect(`/festivals/${festival._id}`);
@@ -77,9 +79,15 @@ app.delete("/festivals/:id", asyncWrap(async (req, res) => {
   res.redirect('/festivals');
 }));
 
-app.use((err, req, res, next) => {
-  res.send('Oh boy, something wrong!');
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404))
 })
+
+app.use((err, req, res, next) => {
+  const { statCode = 500} = err;
+  if (!err.message) err.message = "OH no, Error!";
+  res.status(statCode).render('error', { err })
+});
 
 
 // PORT
