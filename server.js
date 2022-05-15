@@ -3,7 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const asyncWrap = require('./utilities/AsyncWrap');
 const ExpressError = require('./utilities/ExpressError');
-const Joi = require('joi');
+const { festiSchema } = require('./schemas.js');
 const ejsMate = require('ejs-mate');
 const Festival = require("./models/festival");
 const methodOverride = require("method-override");
@@ -36,6 +36,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 
+const validateFest = (req, res, next) => {
+  const { error } = festiSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',');
+    throw new ExpressError(msg, 400)
+  } else {
+    next();
+  }
+}
+
+
 
 // ROUTES
 app.get("/", (req, res) => {
@@ -51,23 +62,8 @@ app.get("/festivals/new", (req, res) => {
   res.render("festivals/new");
 });
 
-app.post("/festivals", asyncWrap(async (req, res) => {
+app.post("/festivals", validateFest, asyncWrap(async (req, res) => {
   // if (!req.body.festivals) throw new ExpressError('Invalid Campground Data', 400);
-  const festSchema = Joi.object({
-    festival: Joi.object({
-      title: Joi.string().required(),
-      location: Joi.string().required(),
-      image: Joi.string().required(),
-      price: Joi.number().required().min(0),
-      description: Joi.string().required(),
-    }).required()
-  }) 
-  const { error } = festSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map(el => el.message).join(',');
-    throw new ExpressError(msg, 400)
-  }
   const festival = new Festival(req.body.festival);
   await festival.save();
   res.redirect(`/festivals/${festival._id}`);
@@ -83,7 +79,7 @@ app.get("/festivals/:id/edit", asyncWrap(async (req, res) => {
   res.render("festivals/edit", { festival });
 }));
 
-app.put('/festivals/:id', asyncWrap(async (req, res) => {
+app.put('/festivals/:id', validateFest, asyncWrap(async (req, res) => {
   const { id } = req.params;
   const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
   res.redirect(`/festivals/${festival._id}`);
