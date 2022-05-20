@@ -3,7 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const asyncWrap = require('./utilities/AsyncWrap');
 const ExpressError = require('./utilities/ExpressError');
-const { festiSchema } = require('./schemas.js');
+const { festiSchema, reviewSchema } = require('./schemas.js');
 const ejsMate = require('ejs-mate');
 const Festival = require("./models/festival");
 const methodOverride = require("method-override");
@@ -40,6 +40,16 @@ app.use(methodOverride('_method'));
 
 const validateFest = (req, res, next) => {
   const { error } = festiSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(',');
+    throw new ExpressError(msg, 400)
+  } else {
+    next();
+  }
+}
+
+const validateReview = (req, res, next) => {
+  const {error} = reviewSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(',');
     throw new ExpressError(msg, 400)
@@ -93,7 +103,7 @@ app.delete("/festivals/:id", asyncWrap(async (req, res) => {
   res.redirect('/festivals');
 }));
 
-app.post('/festivals/:id/reviews', asyncWrap(async (req, res) => {
+app.post('/festivals/:id/reviews', validateReview, asyncWrap(async (req, res) => {
   const festival = await Festival.findById(req.params.id);
   const review = new Review(req.body.params);
   festival.reviews.push(review);

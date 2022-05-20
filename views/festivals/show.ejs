@@ -25,7 +25,7 @@
                 <a href="/festivals" class="card-link btn btn-info">All Festivals</a>
               </div>
               <h2>Leave a Review!</h2>
-              <form action="/festivals/<%=festival._id%>/reviews" method="POST" class="mb-3 needs-validation"validated>
+              <form action="/festivals/<%=festival._id%>/reviews" method="POST" class="mb-3 needs-validation" novalidate>
                 <div class="mb-3">
                   <label class="form-label" for="rating">rating</label>
                   <input type="range" min="1" max="5" class="form-range" name="review[rating]" id="rating">
