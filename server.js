@@ -7,6 +7,9 @@ const { festiSchema } = require('./schemas.js');
 const ejsMate = require('ejs-mate');
 const Festival = require("./models/festival");
 const methodOverride = require("method-override");
+const Review = require('./models/review');
+
+
 
 const app = express();
 
@@ -34,7 +37,6 @@ app.set("views", path.join(__dirname, "views"));
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-
 
 const validateFest = (req, res, next) => {
   const { error } = festiSchema.validate(req.body);
@@ -90,6 +92,15 @@ app.delete("/festivals/:id", asyncWrap(async (req, res) => {
   await Festival.findByIdAndDelete(id);
   res.redirect('/festivals');
 }));
+
+app.post('/festivals/:id/reviews', asyncWrap(async (req, res) => {
+  const festival = await Festival.findById(req.params.id);
+  const review = new Review(req.body.params);
+  festival.reviews.push(review);
+  await review.save();
+  await festival.save()
+  res.redirect(`/festivals/${festival._id}`);
+}))
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404))
