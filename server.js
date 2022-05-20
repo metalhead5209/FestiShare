@@ -82,7 +82,7 @@ app.post("/festivals", validateFest, asyncWrap(async (req, res) => {
 }));
 
 app.get("/festivals/:id", asyncWrap(async (req, res) => {
-  const festival = await Festival.findById(req.params.id);
+  const festival = await Festival.findById(req.params.id).populate('reviews');
   res.render("festivals/show", { festival });
 }));
 
@@ -105,7 +105,7 @@ app.delete("/festivals/:id", asyncWrap(async (req, res) => {
 
 app.post('/festivals/:id/reviews', validateReview, asyncWrap(async (req, res) => {
   const festival = await Festival.findById(req.params.id);
-  const review = new Review(req.body.params);
+  const review = new Review(req.body.review);
   festival.reviews.push(review);
   await review.save();
   await festival.save()
