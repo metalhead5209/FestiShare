@@ -36,6 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use('/festivals', festiRoutes);
 app.use('/festivals/:id/reviews', reviewRoutes);
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 
