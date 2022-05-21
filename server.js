@@ -1,13 +1,11 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
-const asyncWrap = require('./utilities/AsyncWrap');
 const ExpressError = require('./utilities/ExpressError');
-const { festiSchema, reviewSchema } = require('./schemas.js');
 const ejsMate = require('ejs-mate');
-const Festival = require("./models/festival");
 const methodOverride = require("method-override");
-const Review = require('./models/review');
+const festiRoutes = require('./routes/festiRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 
 
@@ -26,7 +24,6 @@ mongoose.connect(
 );
 
 
-
 // VIEW ENGINE
 app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
@@ -37,87 +34,14 @@ app.set("views", path.join(__dirname, "views"));
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-
-const validateFest = (req, res, next) => {
-  const { error } = festiSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(el => el.message).join(',');
-    throw new ExpressError(msg, 400)
-  } else {
-    next();
-  }
-}
-
-const validateReview = (req, res, next) => {
-  const {error} = reviewSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(el => el.message).join(',');
-    throw new ExpressError(msg, 400)
-  } else {
-    next();
-  }
-}
+app.use('/festivals', festiRoutes);
+app.use('/festivals/:id/reviews', reviewRoutes);
 
 
 
-// ROUTES
 app.get("/", (req, res) => {
   res.render("home");
 });
-
-app.get("/festivals", asyncWrap(async (req, res) => {
-  const festivals = await Festival.find({});
-  res.render("festivals/index", { festivals });
-}));
-
-app.get("/festivals/new", (req, res) => {
-  res.render("festivals/new");
-});
-
-app.post("/festivals", validateFest, asyncWrap(async (req, res) => {
-  // if (!req.body.festivals) throw new ExpressError('Invalid Campground Data', 400);
-  const festival = new Festival(req.body.festival);
-  await festival.save();
-  res.redirect(`/festivals/${festival._id}`);
-}));
-
-app.get("/festivals/:id", asyncWrap(async (req, res) => {
-  const festival = await Festival.findById(req.params.id).populate('reviews');
-  res.render("festivals/show", { festival });
-}));
-
-app.get("/festivals/:id/edit", asyncWrap(async (req, res) => {
-  const festival = await Festival.findById(req.params.id);
-  res.render("festivals/edit", { festival });
-}));
-
-app.put('/festivals/:id', validateFest, asyncWrap(async (req, res) => {
-  const { id } = req.params;
-  const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
-  res.redirect(`/festivals/${festival._id}`);
-}));
-
-app.delete("/festivals/:id", asyncWrap(async (req, res) => {
-  const { id } = req.params;
-  await Festival.findByIdAndDelete(id);
-  res.redirect('/festivals');
-}));
-
-app.post('/festivals/:id/reviews', validateReview, asyncWrap(async (req, res) => {
-  const festival = await Festival.findById(req.params.id);
-  const review = new Review(req.body.review);
-  festival.reviews.push(review);
-  await review.save();
-  await festival.save()
-  res.redirect(`/festivals/${festival._id}`);
-}));
-
-app.delete('/festivals/:id/reviews/:reviewId', asyncWrap(async (req, res) => {
-  const { id, reviewId } = req.params;
-  await Festival.findByIdAndUpdate(id, { $pull: {reviews: reviewId} });
-  await Review.findByIdAndDelete(req.params.reviewId);
-  res.redirect(`/festivals/${id}`);
-}))
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404))
