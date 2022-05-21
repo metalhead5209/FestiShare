@@ -110,6 +110,13 @@ app.post('/festivals/:id/reviews', validateReview, asyncWrap(async (req, res) =>
   await review.save();
   await festival.save()
   res.redirect(`/festivals/${festival._id}`);
+}));
+
+app.delete('/festivals/:id/reviews/:reviewId', asyncWrap(async (req, res) => {
+  const { id, reviewId } = req.params;
+  await Festival.findByIdAndUpdate(id, { $pull: {reviews: reviewId} });
+  await Review.findByIdAndDelete(req.params.reviewId);
+  res.redirect(`/festivals/${id}`);
 }))
 
 app.all('*', (req, res, next) => {
