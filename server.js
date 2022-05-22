@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const session = require('express-session');
 const mongoose = require("mongoose");
 const ExpressError = require('./utilities/ExpressError');
 const ejsMate = require('ejs-mate');
@@ -32,18 +33,34 @@ app.set("views", path.join(__dirname, "views"));
 
 
 // MIDDLEWARE
+const sesConfig = {
+  secret: 'icantwaittobeemployed',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7
+  }
+}
+
+app.use(session(sesConfig));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/festivals', festiRoutes);
 app.use('/festivals/:id/reviews', reviewRoutes);
-app.use(express.static(path.join(__dirname, 'public')))
 
-
-
+// HOME ROUTE (under construction)
 app.get("/", (req, res) => {
   res.render("home");
 });
 
+
+// ERROR ROUTES
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404))
 })

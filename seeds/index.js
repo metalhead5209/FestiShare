@@ -16,8 +16,7 @@ mongoose.connect(DB,
 const mix = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDb = async () => {
-    await Festival.deleteMany({});
-    for (let i = 0; i < 41; i++) {
+    for (let i = 0; i < 5; i++) {
         const randThou = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() *200) + 10;
         const fest = new Festival({
