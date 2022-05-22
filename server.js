@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const session = require('express-session');
+const flash = require('connect-flash');
 const mongoose = require("mongoose");
 const ExpressError = require('./utilities/ExpressError');
 const ejsMate = require('ejs-mate');
@@ -47,6 +48,13 @@ const sesConfig = {
 app.use(session(sesConfig));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 
 app.use(express.static(path.join(__dirname, 'public')));

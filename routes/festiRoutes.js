@@ -32,28 +32,39 @@ const validateFest = (req, res, next) => {
     // if (!req.body.festivals) throw new ExpressError('Invalid Campground Data', 400);
     const festival = new Festival(req.body.festival);
     await festival.save();
+    req.flash('success', 'Successfully created new Festival!');
     res.redirect(`/festivals/${festival._id}`);
   }));
   
   router.get("/:id", asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id).populate('reviews');
+    if (!festival) {
+      req.flash('error', 'Festival does not exist');
+      return res.redirect('/festivals')
+    } 
     res.render("festivals/show", { festival });
   }));
   
   router.get("/:id/edit", asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id);
+    if (!festival) {
+      req.flash('error', 'Festival does not exist');
+      return res.redirect('/festivals')
+    } 
     res.render("festivals/edit", { festival });
   }));
   
   router.put('/:id', validateFest, asyncWrap(async (req, res) => {
     const { id } = req.params;
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
+    req.flash('success', 'Successfully edited Festival')
     res.redirect(`/festivals/${festival._id}`);
   }));
   
   router.delete("/:id", asyncWrap(async (req, res) => {
     const { id } = req.params;
     await Festival.findByIdAndDelete(id);
+    req.flash('success', 'Successfully deleted Festival');
     res.redirect('/festivals');
   }));
 
