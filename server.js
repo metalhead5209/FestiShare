@@ -1,4 +1,5 @@
 const express = require("express");
+const app = express();
 const path = require("path");
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -6,14 +7,12 @@ const mongoose = require("mongoose");
 const ExpressError = require('./utilities/ExpressError');
 const ejsMate = require('ejs-mate');
 const methodOverride = require("method-override");
+const passport = require('passport');
+const localStrat = require('passport-local');
+const User = require('./models/user');
+
 const festiRoutes = require('./routes/festiRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
-
-
-
-const app = express();
-
-
 
 // DB CONNECTION
 const DB = "mongodb://127.0.0.1:27017/festiShare";
@@ -34,6 +33,10 @@ app.set("views", path.join(__dirname, "views"));
 
 
 // MIDDLEWARE
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
+
 const sesConfig = {
   secret: 'icantwaittobeemployed',
   resave: false,
@@ -46,18 +49,24 @@ const sesConfig = {
 }
 
 app.use(session(sesConfig));
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
-
 app.use(flash());
+
+// always make sure to use after session
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrat(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
 });
 
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/festivals', festiRoutes);
 app.use('/festivals/:id/reviews', reviewRoutes);
@@ -75,7 +84,7 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { statCode = 500} = err;
-  if (!err.message) err.message = "OH no, Error!";
+  if (!err.message) err.message = "Error!";
   res.status(statCode).render('error', { err })
 });
 
