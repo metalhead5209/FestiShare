@@ -11,6 +11,8 @@ const passport = require('passport');
 const localStrat = require('passport-local');
 const User = require('./models/user');
 
+// IMPORT ROUTERS
+const userRoutes = require('./routes/userRoutes');
 const festiRoutes = require('./routes/festiRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
@@ -51,7 +53,7 @@ const sesConfig = {
 app.use(session(sesConfig));
 app.use(flash());
 
-// always make sure to use after session
+// always make sure to use after session config
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrat(User.authenticate()));
@@ -59,15 +61,13 @@ passport.use(new localStrat(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
 });
 
-
+app.use('/', userRoutes);
 app.use('/festivals', festiRoutes);
 app.use('/festivals/:id/reviews', reviewRoutes);
 
