@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { festiSchema } = require('../schemas.js');
 const asyncWrap = require('../utilities/AsyncWrap');
+const { loggedIn } = require('../middleware');
 
 const ExpressError = require('../utilities/ExpressError');
 const Festival = require('../models/festival');
@@ -24,12 +25,11 @@ const validateFest = (req, res, next) => {
     res.render("festivals/index", { festivals });
   }));
   
-  router.get("/new", (req, res) => {
+  router.get("/new", loggedIn, (req, res) => {
     res.render("festivals/new");
   });
   
-  router.post("/", validateFest, asyncWrap(async (req, res) => {
-    // if (!req.body.festivals) throw new ExpressError('Invalid Campground Data', 400);
+  router.post("/", loggedIn, validateFest, asyncWrap(async (req, res) => {
     const festival = new Festival(req.body.festival);
     await festival.save();
     req.flash('success', 'Successfully created new Festival!');
@@ -45,7 +45,7 @@ const validateFest = (req, res, next) => {
     res.render("festivals/show", { festival });
   }));
   
-  router.get("/:id/edit", asyncWrap(async (req, res) => {
+  router.get("/:id/edit", loggedIn, asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id);
     if (!festival) {
       req.flash('error', 'Festival does not exist');
@@ -54,14 +54,14 @@ const validateFest = (req, res, next) => {
     res.render("festivals/edit", { festival });
   }));
   
-  router.put('/:id', validateFest, asyncWrap(async (req, res) => {
+  router.put('/:id', loggedIn, validateFest, asyncWrap(async (req, res) => {
     const { id } = req.params;
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
     req.flash('success', 'Successfully edited Festival')
     res.redirect(`/festivals/${festival._id}`);
   }));
   
-  router.delete("/:id", asyncWrap(async (req, res) => {
+  router.delete("/:id", loggedIn, asyncWrap(async (req, res) => {
     const { id } = req.params;
     await Festival.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted Festival');
