@@ -27,7 +27,7 @@
         </div>
         <div class="col-6">
           <h2>Share your Festival Experience</h2>
-              <form action="/festivals/<%=festival._id%>/reviews" method="POST" class="mb-3 needs-validation" novalidate>
+              <form action="/festivals/<%=festival._id%>/experiences" method="POST" class="mb-3 needs-validation" novalidate>
                 <div class="mb-3">
                   <label class="form-label" for="rating">rating</label>
                   <input type="range" min="1" max="5" class="form-range" name="experience[rating]" id="rating">
@@ -44,7 +44,7 @@
                     <div class="card-body">
                       <h5 class="card-title">Rating: <%= experience.rating %> </h5>
                       <p class="card-text"><%= experience.body %> </p>
-                      <form action="/festivals/<%=festival._id%>/reviews/<%=experience.id%>?_method=DELETE" method="POST">
+                      <form action="/festivals/<%=festival._id%>/experiences/<%=experience.id%>?_method=DELETE" method="POST">
                         <button class="btn btn-sm btn-danger">Delete</button>
                       </form>
                     </div>

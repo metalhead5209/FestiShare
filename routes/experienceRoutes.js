@@ -21,8 +21,8 @@ const validateExperience = (req, res, next) => {
 // ROUTES
 router.post('/', validateExperience, asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id);
-    const experience = new Experience(req.body.review);
-    festival.experiences.push(review);
+    const experience = new Experience(req.body.experience);
+    festival.experiences.push(experience);
     await experience.save();
     await festival.save()
     req.flash('success', 'SUCCESS! Thank you for sharing your Experience!!')

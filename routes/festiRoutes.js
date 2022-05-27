@@ -37,7 +37,7 @@ const validateFest = (req, res, next) => {
   }));
   
   router.get("/:id", asyncWrap(async (req, res) => {
-    const festival = await Festival.findById(req.params.id).populate('reviews');
+    const festival = await Festival.findById(req.params.id).populate('experiences');
     if (!festival) {
       req.flash('error', 'Festival does not exist');
       return res.redirect('/festivals')
