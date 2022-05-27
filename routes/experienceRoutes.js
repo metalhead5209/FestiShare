@@ -6,7 +6,7 @@ const Festival = require('../models/festival');
 
 const ExpressError = require('../utilities/ExpressError');
 const asyncWrap = require('../utilities/AsyncWrap');
-const Experience = require('../models/experience');
+
 
 const validateExperience = (req, res, next) => {
     const {error} = experienceSchema.validate(req.body);
