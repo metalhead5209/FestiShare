@@ -20,6 +20,7 @@ const seedDb = async () => {
         const randThou = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() *200) + 10;
         const fest = new Festival({
+            contributor: '62909bdb623feb28a2be8871',
             location: `${cities[randThou].city}, ${cities[randThou].state}`,
             title: `${mix(descriptors)} ${mix(places)}`,
             image: 'https://source.unsplash.com/collection/3155144',

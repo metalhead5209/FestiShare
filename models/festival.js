@@ -8,6 +8,10 @@ const festivalSchema = new Schema({
     image: String,
     price: Number,
     description: String,
+    contributor: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     experiences: [
         {
             type: Schema.Types.ObjectId,

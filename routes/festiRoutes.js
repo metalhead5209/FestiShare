@@ -31,13 +31,14 @@ const validateFest = (req, res, next) => {
   
   router.post("/", loggedIn, validateFest, asyncWrap(async (req, res) => {
     const festival = new Festival(req.body.festival);
+    festival.contributor = req.user._id;
     await festival.save();
     req.flash('success', 'Successfully created new Festival!');
     res.redirect(`/festivals/${festival._id}`);
   }));
   
   router.get("/:id", asyncWrap(async (req, res) => {
-    const festival = await Festival.findById(req.params.id).populate('experiences');
+    const festival = await Festival.findById(req.params.id).populate('experiences').populate('contributor');
     if (!festival) {
       req.flash('error', 'Festival does not exist');
       return res.redirect('/festivals')
