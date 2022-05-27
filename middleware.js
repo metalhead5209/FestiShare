@@ -1,6 +1,8 @@
 const { festiSchema } = require('./schemas');
+const { experienceSchema } = require('./schemas');
 const Festival = require('./models/festival');
 const ExpressError = require('./utilities/ExpressError');
+
 
 module.exports.loggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {

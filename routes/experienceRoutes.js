@@ -3,25 +3,17 @@ const router = express.Router({mergeParams: true});
 const { experienceSchema } = require('../schemas.js');
 const Experience = require('../models/experience');
 const Festival = require('../models/festival');
+const { validateExperience, loggedIn } = require('../middleware')
 
-const ExpressError = require('../utilities/ExpressError');
+const ExpressError = require('../utilities/ExpressError')
 const asyncWrap = require('../utilities/AsyncWrap');
 
-
-const validateExperience = (req, res, next) => {
-    const {error} = experienceSchema.validate(req.body);
-    if (error) {
-      const msg = error.details.map(el => el.message).join(',');
-      throw new ExpressError(msg, 400)
-    } else {
-      next();
-    }
-  }
   
 // ROUTES
-router.post('/', validateExperience, asyncWrap(async (req, res) => {
+router.post('/', loggedIn, validateExperience, asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id);
     const experience = new Experience(req.body.experience);
+    experience.contributor = req.user._id;
     festival.experiences.push(experience);
     await experience.save();
     await festival.save()

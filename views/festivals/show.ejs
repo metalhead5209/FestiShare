@@ -32,6 +32,7 @@
               </div> 
         </div>
         <div class="col-6">
+          <% if(currentUser) {%> 
           <h2>Share your Festival Experience</h2>
               <form action="/festivals/<%=festival._id%>/experiences" method="POST" class="mb-3 needs-validation" novalidate>
                 <div class="mb-3">
@@ -44,6 +45,7 @@
                 </div>
                 <button class="btn btn-success">Submit</button>
               </form>
+              <% } %> 
               <h2>Experiences</h2>
               <% for (let experience of festival.experiences) { %> 
                   <div class="card mb-3">

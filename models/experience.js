@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 const experienceSchema = new Schema({
     rating: Number,
     body: String,
+    contributor: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 
