@@ -21,7 +21,7 @@ router.post('/', loggedIn, validateExperience, asyncWrap(async (req, res) => {
     res.redirect(`/festivals/${festival._id}`);
   }));
   
-router.delete('/:experienceId', asyncWrap(async (req, res) => {
+router.delete('/:experienceId', loggedIn, asyncWrap(async (req, res) => {
     const { id, experienceId } = req.params;
     await Festival.findByIdAndUpdate(id, { $pull: {experiences: experienceId} });
     await Experience.findByIdAndDelete(req.params.experienceId);

@@ -27,7 +27,12 @@ const Festival = require('../models/festival');
   }));
   
   router.get("/:id", asyncWrap(async (req, res) => {
-    const festival = await Festival.findById(req.params.id).populate('experiences').populate('contributor');
+    const festival = await Festival.findById(req.params.id).populate({
+      path:'experiences',
+      populate: {
+        path: 'contributor'
+      }
+  }).populate('contributor');
     if (!festival) {
       req.flash('error', 'Festival does not exist');
       return res.redirect('/festivals')

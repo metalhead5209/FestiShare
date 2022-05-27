@@ -2,6 +2,7 @@ const { festiSchema } = require('./schemas');
 const { experienceSchema } = require('./schemas');
 const Festival = require('./models/festival');
 const ExpressError = require('./utilities/ExpressError');
+const Experience = require('./models/experience');
 
 
 module.exports.loggedIn = (req, res, next) => {
@@ -33,6 +34,16 @@ module.exports.isContributor = async (req, res, next) => {
     next();
   };
 
+  module.exports.isContributorAuthor = async (req, res, next) => {
+      const { id, experienceId } = req.params;
+      const experience = await Experience.findById(experienceId);
+      if (!experience.contributor.equals(req.user._id)) {
+          req.flash('error', 'You are not authorized to do that!');
+          return res.redirect(`/festivals/${id}`);
+      }
+      next();
+  }
+
 
 module.exports.validateExperience = (req, res, next) => {
     const {error} = experienceSchema.validate(req.body);
@@ -43,3 +54,4 @@ module.exports.validateExperience = (req, res, next) => {
       next();
     }
   };
+
