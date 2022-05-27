@@ -1,21 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { festiSchema } = require('../schemas.js');
 const asyncWrap = require('../utilities/AsyncWrap');
-const loggedIn = require('../middleware');
+const { loggedIn, validateFest, isContributor } = require('../middleware');
 
-const ExpressError = require('../utilities/ExpressError');
 const Festival = require('../models/festival');
 
-const validateFest = (req, res, next) => {
-    const { error } = festiSchema.validate(req.body);
-    if (error) {
-      const msg = error.details.map(el => el.message).join(',');
-      throw new ExpressError(msg, 400)
-    } else {
-      next();
-    }
-  }
 
 
 // ROUTES
@@ -46,7 +35,7 @@ const validateFest = (req, res, next) => {
     res.render("festivals/show", { festival });
   }));
   
-  router.get("/:id/edit", loggedIn, asyncWrap(async (req, res) => {
+  router.get("/:id/edit", loggedIn, isContributor, asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id);
     if (!festival) {
       req.flash('error', 'Festival does not exist');
@@ -55,14 +44,14 @@ const validateFest = (req, res, next) => {
     res.render("festivals/edit", { festival });
   }));
   
-  router.put('/:id', loggedIn, validateFest, asyncWrap(async (req, res) => {
+  router.put('/:id', loggedIn, isContributor, validateFest, asyncWrap(async (req, res) => {
     const { id } = req.params;
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
     req.flash('success', 'Successfully edited Festival')
     res.redirect(`/festivals/${festival._id}`);
   }));
   
-  router.delete("/:id", loggedIn, asyncWrap(async (req, res) => {
+  router.delete("/:id", loggedIn, isContributor, asyncWrap(async (req, res) => {
     const { id } = req.params;
     await Festival.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted Festival');
