@@ -12,14 +12,19 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><%= festival.description %></li>
                   <li class="list-group-item">$<%= festival.price %>/ticket</li>
-                  <li class="list-group-item">Contributor: <%= festival.contributor.username %></li>
                 </ul>
+                <% if(currentUser && festival.contributor.equals(currentUser._id)) {%> 
                 <div class="card-body d-flex justify-content-sm-evenly">
                   <a href="/festivals/<%=festival._id%>/edit" class="card-link btn btn-secondary mr-2">Edit</a>
                   <form action="/festivals/<%=festival._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
                 </div>
+                <% } %> 
+                
+                <div class="card-footer text-muted">
+                  Contributor: <%= festival.contributor.username %>
+              </div>
                 <div class="card-footer text-muted">
                     2 days ago
                 </div>
