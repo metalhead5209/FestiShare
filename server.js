@@ -48,7 +48,7 @@ const sesConfig = {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
-}
+};
 
 app.use(session(sesConfig));
 app.use(flash());
@@ -82,7 +82,7 @@ app.get("/", (req, res) => {
 // ERROR ROUTES
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404))
-})
+});
 
 app.use((err, req, res, next) => {
   const { statCode = 500} = err;
