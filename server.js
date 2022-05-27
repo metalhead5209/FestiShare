@@ -14,7 +14,7 @@ const User = require('./models/user');
 // IMPORT ROUTERS
 const userRoutes = require('./routes/userRoutes');
 const festiRoutes = require('./routes/festiRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
+const experienceRoutes = require('./routes/experienceRoutes');
 
 // DB CONNECTION
 const DB = "mongodb://127.0.0.1:27017/festiShare";
@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 
 app.use('/', userRoutes);
 app.use('/festivals', festiRoutes);
-app.use('/festivals/:id/reviews', reviewRoutes);
+app.use('/festivals/:id/experiences', experienceRoutes);
 
 // HOME ROUTE (under construction)
 app.get("/", (req, res) => {

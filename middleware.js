@@ -1,4 +1,4 @@
-module.exports.loggedIn = (req, res, next) => {
+const loggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
         req.flash('error', 'Must Be Logged In');
@@ -6,3 +6,5 @@ module.exports.loggedIn = (req, res, next) => {
     }
     next();
 };
+
+module.exports = loggedIn;

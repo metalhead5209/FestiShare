@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { festiSchema } = require('../schemas.js');
 const asyncWrap = require('../utilities/AsyncWrap');
-const { loggedIn } = require('../middleware');
+const loggedIn = require('../middleware');
 
 const ExpressError = require('../utilities/ExpressError');
 const Festival = require('../models/festival');
