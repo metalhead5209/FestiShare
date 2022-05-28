@@ -41,7 +41,7 @@ module.exports.editPage = async (req, res) => {
     res.render("festivals/edit", { festival });
 };
 
-module.exports.editPage = async (req, res) => {
+module.exports.editFest = async (req, res) => {
     const { id } = req.params;
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
     req.flash('success', 'Successfully edited Festival')

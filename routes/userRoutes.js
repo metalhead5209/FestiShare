@@ -17,7 +17,7 @@ router.post('/register', asyncWrap(users.registerRoute));
 router.get('/login', users.loginPage);
 
 // login Route
-router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.loginRoute);
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.loginRoute );
 
 // logout route 
 router.get('/logout', users.logoutRoute);
