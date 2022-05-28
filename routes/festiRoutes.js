@@ -4,7 +4,8 @@ const festivals = require('../controllers/festiController');
 const asyncWrap = require('../utilities/AsyncWrap');
 const { loggedIn, validateFest, isContributor } = require('../middleware');
 const multer = require('multer');
-const upload= multer({ dest: 'uploads/'});
+const { storage } = require('../cloudinary/config');
+const upload= multer({ storage });
 
 const Festival = require('../models/festival');
 
@@ -20,8 +21,9 @@ const Festival = require('../models/festival');
   
   // New festival post route
   // router.post("/", loggedIn, validateFest, asyncWrap(festivals.newFest));
-  router.post('/', upload.single('image'), (req, res) => {
-    console.log(req.body, req.file)
+  router.post('/', upload.array('image'), (req, res) => {
+    res.send('it worked!')
+    console.log(req.body, req.files)
   })
   // Festival show page
   router.get("/:id", asyncWrap(festivals.showPage));
