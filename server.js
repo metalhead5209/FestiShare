@@ -1,3 +1,9 @@
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
+console.log(process.env.SECRET);
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -92,7 +98,7 @@ app.use((err, req, res, next) => {
 
 
 // PORT
-const PORT = 5252 || process.env.PORT;
+const PORT = 5252;
 app.listen(PORT, () => {
   console.log("LISTENING ON PORT 5252");
 });

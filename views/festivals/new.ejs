@@ -3,7 +3,7 @@
        <div class="row justify-content-center">
            <h1 class="text-center">New Festival</h1>
            <div class="col-10">
-            <form action="/festivals" method="POST" novalidate class="needs-validation">
+            <form action="/festivals" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
                 <div>
                     <label class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" id="title" name="festival[title]" required>
@@ -13,8 +13,7 @@
                     <input class="form-control" type="text" id="location" name="festival[location]" required>
                 </div>
                 <div>
-                    <label class="form-label" for="image">Image URL</label>
-                    <input class="form-control" type="text" id="Image" name="festival[image]" required>
+                   <input type="file" class="" name="image" id="">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">Festival Price</label>

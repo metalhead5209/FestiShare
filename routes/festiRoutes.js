@@ -3,6 +3,8 @@ const router = express.Router();
 const festivals = require('../controllers/festiController');
 const asyncWrap = require('../utilities/AsyncWrap');
 const { loggedIn, validateFest, isContributor } = require('../middleware');
+const multer = require('multer');
+const upload= multer({ dest: 'uploads/'});
 
 const Festival = require('../models/festival');
 
@@ -17,8 +19,10 @@ const Festival = require('../models/festival');
   router.get("/new", loggedIn, festivals.newFestForm);
   
   // New festival post route
-  router.post("/", loggedIn, validateFest, asyncWrap(festivals.newFest));
-  
+  // router.post("/", loggedIn, validateFest, asyncWrap(festivals.newFest));
+  router.post('/', upload.single('image'), (req, res) => {
+    console.log(req.body, req.file)
+  })
   // Festival show page
   router.get("/:id", asyncWrap(festivals.showPage));
   
