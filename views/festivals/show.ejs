@@ -32,7 +32,7 @@
               </div> 
         </div>
         <div class="col-6">
-          <% if(currentUser && festival.contributor.equals(currentUser._id)) {%> 
+          <% if(currentUser) {%> 
           <h2>Share your Festival Experience</h2>
               <form action="/festivals/<%=festival._id%>/experiences" method="POST" class="mb-3 needs-validation" novalidate>
                 <div class="mb-3">
@@ -52,8 +52,8 @@
                     <div class="card-body">
                       <h5 class="card-title">Rating: <%= experience.rating %> </h5>
                       <p class="card-text"><%= experience.body %> </p>
-                      <p class="cart-text text-muted"><b>Contributed By: </b><%= festival.contributor.username %></p>
-                      <% if(currentUser && experience.contributor.equals(currentUser._id) && festival.contributor.equals(currentUser._id)) {%> 
+                      <p class="cart-text text-muted"><b>Contributed By: </b><%= experience.contributor.username %></p>
+                      <% if(currentUser && experience.contributor.equals(currentUser._id)) {%> 
                       <form action="/festivals/<%=festival._id%>/experiences/<%=experience.id%>?_method=DELETE" method="POST">
                         <button class="btn btn-sm btn-danger">Delete</button>
                       </form>
