@@ -11,13 +11,13 @@ const users = require('../controllers/userController');
 router.get('/register', users.registerPage)
 
 //  Register route
-router.post('/register', asyncWrap(users.createUserRoute));
+router.post('/register', asyncWrap(users.registerRoute));
 
 // Login page
-router.get('/login', users.loginIndex);
+router.get('/login', users.loginPage);
 
 // login Route
-router.post('/login', users.loginRoute);
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.loginRoute);
 
 // logout route 
 router.get('/logout', users.logoutRoute);
