@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const festivals = require('../controllers/festiController');
 const asyncWrap = require('../utilities/AsyncWrap');
 const { loggedIn, validateFest, isContributor } = require('../middleware');
 
@@ -7,60 +8,27 @@ const Festival = require('../models/festival');
 
 
 
-// ROUTES
+// ***** ROUTES *****
 
-  router.get("/", asyncWrap(async (req, res) => {
-    const festivals = await Festival.find({});
-    res.render("festivals/index", { festivals });
-  }));
+// Festival index page
+  router.get("/", asyncWrap(festivals.festIndex));
   
-  router.get("/new", loggedIn, (req, res) => {
-    res.render("festivals/new");
-  });
+  // New festival form
+  router.get("/new", loggedIn, festivals.newFestForm);
   
-  router.post("/", loggedIn, validateFest, asyncWrap(async (req, res) => {
-    const festival = new Festival(req.body.festival);
-    festival.contributor = req.user._id;
-    await festival.save();
-    req.flash('success', 'Successfully created new Festival!');
-    res.redirect(`/festivals/${festival._id}`);
-  }));
+  // New festival post route
+  router.post("/", loggedIn, validateFest, asyncWrap(festivals.newFest));
   
-  router.get("/:id", asyncWrap(async (req, res) => {
-    const festival = await Festival.findById(req.params.id).populate({
-      path:'experiences',
-      populate: {
-        path: 'contributor'
-      }
-  }).populate('contributor');
-    if (!festival) {
-      req.flash('error', 'Festival does not exist');
-      return res.redirect('/festivals')
-    } 
-    res.render("festivals/show", { festival });
-  }));
+  // Festival show page
+  router.get("/:id", asyncWrap(festivals.showPage));
   
-  router.get("/:id/edit", loggedIn, isContributor, asyncWrap(async (req, res) => {
-    const festival = await Festival.findById(req.params.id);
-    if (!festival) {
-      req.flash('error', 'Festival does not exist');
-      return res.redirect('/festivals')
-    } 
-    res.render("festivals/edit", { festival });
-  }));
+  // Festival edit page
+  router.get("/:id/edit", loggedIn, isContributor, asyncWrap(festivals.editPage));
+
+  // Festival edit route
+  router.put('/:id', loggedIn, isContributor, validateFest, asyncWrap(festivals.editFest));
   
-  router.put('/:id', loggedIn, isContributor, validateFest, asyncWrap(async (req, res) => {
-    const { id } = req.params;
-    const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
-    req.flash('success', 'Successfully edited Festival')
-    res.redirect(`/festivals/${festival._id}`);
-  }));
-  
-  router.delete("/:id", loggedIn, isContributor, asyncWrap(async (req, res) => {
-    const { id } = req.params;
-    await Festival.findByIdAndDelete(id);
-    req.flash('success', 'Successfully deleted Festival');
-    res.redirect('/festivals');
-  }));
+  // Festival delete route
+  router.delete("/:id", loggedIn, isContributor, asyncWrap(festivals.deleteFest));
 
   module.exports = router;

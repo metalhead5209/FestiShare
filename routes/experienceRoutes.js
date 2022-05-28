@@ -14,7 +14,7 @@ router.post('/', loggedIn, validateExperience, asyncWrap(async (req, res) => {
     const festival = await Festival.findById(req.params.id);
     const experience = new Experience(req.body.experience);
     experience.contributor = req.user._id;
-    festival.experiences.push(experience);
+    festival.experiences.unshift(experience);
     await experience.save();
     await festival.save()
     req.flash('success', 'SUCCESS! Thank you for sharing your Experience!!')
