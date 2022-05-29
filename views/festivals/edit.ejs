@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <h1 class="text-center">Edit Festival</h1>
             <div class="col-10">
-                <form action="/festivals/<%=festival._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
+                <form action="/festivals/<%=festival._id%>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
                  <div>
                      <label class="form-label" for="title">Title</label>
                      <input class="form-control" type="text" id="title" name="festival[title]"value="<%= festival.title %>" required>
@@ -17,8 +17,8 @@
                      <input class="form-control" type="text" id="location" name="festival[location]"value="<%= festival.location %>" required>
                  </div>
                  <div>
-                     <label class="form-label" for="image">Image URL</label>
-                     <input class="form-control" type="text" id="Image" name="festival[image]"value="<%= festival.image %>" required>
+                     <label class="form-label" for="image">Add Image(s)</label>
+                     <input type="file" name="image" id="image" multiple>
                  </div>
                  <div class="mb-3">
                      <label class="form-label" for="price">Festival Price</label>

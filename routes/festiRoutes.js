@@ -19,13 +19,9 @@ const Festival = require('../models/festival');
   // New festival form
   router.get("/new", loggedIn, festivals.newFestForm);
 
-
-  
   // New festival post route
   router.post("/", loggedIn, upload.array('image'), validateFest, asyncWrap(festivals.createFest));
   
-
-
   // Festival show page
   router.get("/:id", asyncWrap(festivals.showPage));
   
@@ -33,7 +29,7 @@ const Festival = require('../models/festival');
   router.get("/:id/edit", loggedIn, isContributor, asyncWrap(festivals.editPage));
 
   // Festival edit route
-  router.put('/:id', loggedIn, isContributor, validateFest, asyncWrap(festivals.editFest));
+  router.put('/:id', loggedIn, isContributor, upload.array('image'), validateFest, asyncWrap(festivals.editFest));
   
   // Festival delete route
   router.delete("/:id", loggedIn, isContributor, asyncWrap(festivals.deleteFest));
