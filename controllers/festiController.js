@@ -9,8 +9,9 @@ module.exports.newFestForm =  (req, res) => {
     res.render("festivals/new");
 };
 
-module.exports.newFest = async (req, res) => {
+module.exports.createFest = async (req, res) => {
     const festival = new Festival(req.body.festival);
+    festival.images = req.files.map(file => ({url: file.path, filename: file.filename}));
     festival.contributor = req.user._id;
     await festival.save();
     req.flash('success', 'Successfully created new Festival!');

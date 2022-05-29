@@ -18,13 +18,14 @@ const Festival = require('../models/festival');
   
   // New festival form
   router.get("/new", loggedIn, festivals.newFestForm);
+
+
   
   // New festival post route
-  // router.post("/", loggedIn, validateFest, asyncWrap(festivals.newFest));
-  router.post('/', upload.array('image'), (req, res) => {
-    res.send('it worked!')
-    console.log(req.body, req.files)
-  })
+  router.post("/", loggedIn, upload.array('image'), validateFest, asyncWrap(festivals.createFest));
+  
+
+
   // Festival show page
   router.get("/:id", asyncWrap(festivals.showPage));
   

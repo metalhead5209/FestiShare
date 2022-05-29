@@ -5,7 +5,12 @@ const Schema = mongoose.Schema;
 const festivalSchema = new Schema({
     title: String,
     location: String,
-    image: String,
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
     price: Number,
     description: String,
     contributor: {

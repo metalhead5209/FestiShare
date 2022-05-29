@@ -10,11 +10,13 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
     cloudinary,
-    folder: 'FestiShare',
+    params: {
+        folder: 'FestiShare',
     allowedFormats: ['jpeg', 'png', 'jpg']
+    }
 });
 
 module.exports = {
     cloudinary,
     storage
-}
+} 
