@@ -5,7 +5,7 @@ const asyncWrap = require('../utilities/AsyncWrap');
 const { loggedIn, validateFest, isContributor } = require('../middleware');
 const multer = require('multer');
 const { storage } = require('../cloudinary/config');
-const upload= multer({ storage });
+const upload = multer({ storage });
 
 const Festival = require('../models/festival');
 

@@ -1,5 +1,8 @@
 const { cloudinary } = require('../cloudinary/config');
 const Festival = require('../models/festival');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 
 module.exports.festIndex = async (req, res) => {
@@ -12,7 +15,12 @@ module.exports.newFestForm =  (req, res) => {
 };
 
 module.exports.createFest = async (req, res) => {
+  const geoData = await geoCoder.forwardGeocode({
+    query: req.body.festival.location,
+    limit: 1
+  }).send()
     const festival = new Festival(req.body.festival);
+    festival.geometry = geoData.body.features[0].geometry;
     festival.images = req.files.map(file => ({url: file.path, filename: file.filename}));
     festival.contributor = req.user._id;
     await festival.save();
