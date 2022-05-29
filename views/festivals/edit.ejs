@@ -16,10 +16,6 @@
                      <label class="form-label" for="location">Location</label>
                      <input class="form-control" type="text" id="location" name="festival[location]"value="<%= festival.location %>" required>
                  </div>
-                 <div>
-                     <label class="form-label" for="image">Add Image(s)</label>
-                     <input type="file" name="image" id="image" multiple>
-                 </div>
                  <div class="mb-3">
                      <label class="form-label" for="price">Festival Price</label>
                  <div class="input-group mb-2">
@@ -30,6 +26,10 @@
                      <label for="description" class="form-label">Description</label>
                      <textarea class="form-control" id="description" rows="3" name="festival[description]" required><%= festival.description  %></textarea>
                    </div>
+                   <div class="mb-3">
+                    <label for="image" class="form-label">Choose Image(s)</label>
+                    <input class="form-control" type="file" id="image" name="image" multiple>
+                  </div>
              </div>
                  <button class="btn btn-success mb-3">Submit</button>
              </form>
