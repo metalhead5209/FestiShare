@@ -16,6 +16,17 @@ const festivalSchema = new Schema({
     title: String,
     location: String,
     images: [ImgSchema],
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     price: Number,
     description: String,
     contributor: {
@@ -29,6 +40,8 @@ const festivalSchema = new Schema({
         }
     ]
 });
+
+
 
 festivalSchema.post('findOneAndDelete', async function (doc) {
     if(doc) {
