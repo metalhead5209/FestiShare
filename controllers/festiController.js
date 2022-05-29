@@ -46,7 +46,6 @@ module.exports.editPage = async (req, res) => {
 
 module.exports.editFest = async (req, res) => {
     const { id } = req.params;
-    console.log(req.body);
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
     const imgs = req.files.map(file => ({url: file.path, filename: file.filename}));
     festival.images.push(...imgs);
