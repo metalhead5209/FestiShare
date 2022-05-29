@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="/styles/starability.css">
 
 
-    <div class="row justify-content-center mt-5 mb-3">
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-6">
           <div id="festivalCarouselFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
               <% festival.images.forEach((img, i) => { %>
@@ -50,7 +50,7 @@
               </div> 
               <a href="/festivals" class="btn btn-info">All Festivals</a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <% if(currentUser) {%> 
           <h2>Share your Festival Experience</h2> <br />
           <div class="mb-5">
@@ -77,7 +77,8 @@
                 <button class="btn btn-success">Submit</button>
               </form>
               <% } %> 
-            </div>
+            <!-- </div> -->
+            
               <h2 class="mt-3">Experiences</h2>
               <% for (let experience of festival.experiences) { %> 
                   <div class="card mb-3">
@@ -96,6 +97,7 @@
                     </div>
                 </div>
                <% } %>
+         
         </div>
     </div>
 
