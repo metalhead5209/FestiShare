@@ -1,4 +1,6 @@
+const { cloudinary } = require('../cloudinary/config');
 const Festival = require('../models/festival');
+
 
 module.exports.festIndex = async (req, res) => {
     const festivals = await Festival.find({});
@@ -44,10 +46,17 @@ module.exports.editPage = async (req, res) => {
 
 module.exports.editFest = async (req, res) => {
     const { id } = req.params;
+    console.log(req.body);
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
     const imgs = req.files.map(file => ({url: file.path, filename: file.filename}));
     festival.images.push(...imgs);
     await festival.save();
+    if (req.body.deleteImages) {
+      for(let filename of req.body.deleteImages) {
+        await cloudinary.uploader.destroy(filename)
+      }
+      await festival.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}});
+    }
     req.flash('success', 'Successfully edited Festival')
     res.redirect(`/festivals/${festival._id}`);
 };
