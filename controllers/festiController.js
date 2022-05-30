@@ -1,9 +1,9 @@
-const { cloudinary } = require('../cloudinary/config');
-const Festival = require('../models/festival');
-// const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-// const mapBoxToken = process.env.MAPBOX_TOKEN;
-// const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
 
+const Festival = require('../models/festival');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
+const { cloudinary } = require('../cloudinary/config');
 
 module.exports.festIndex = async (req, res) => {
     const festivals = await Festival.find({});
@@ -15,19 +15,19 @@ module.exports.newFestForm =  (req, res) => {
 };
 
 module.exports.createFest = async (req, res) => {
-  // const geoData = await geoCoder.forwardGeocode({
-  //   query: req.body.festival.location,
-  //   limit: 1
-  // }).send()
-    const festival = new Festival(req.body.festival);
-    // festival.geometry = geoData.body.features[0].geometry;
-    // festival.geometry = geoData.body.features[0].geometry.type;
-    festival.images = req.file.map(file => ({url: file.path, filename: file.filename}));
-    festival.contributor = req.user._id;
-    await festival.save();
-    req.flash('success', 'Successfully created new Festival!');
-    res.redirect(`/festivals/${festival._id}`);
+  const geoData = await geoCoder.forwardGeocode({
+    query: req.body.festival.location,
+    limit: 1
+  }).send()
+  res.send(geoData.body.features[0].geometry.coordinates);
+  // const festival = new Festival(req.body.festival);
+  // festival.images = req.file.map(file => ({url: file.path, filename: file.filename}));
+  // festival.contributor = req.user._id;
+  // await festival.save();
+  // req.flash('success', 'Successfully created new Festival!');
+  // res.redirect(`/festivals/${festival._id}`);
 };
+
 
 module.exports.showPage = async (req, res) => {
     const festival = await Festival.findById(req.params.id).populate({
