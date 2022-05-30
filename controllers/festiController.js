@@ -20,7 +20,7 @@ module.exports.createFest = async (req, res) => {
     limit: 1
   }).send()
     const festival = new Festival(req.body.festival);
-    festival.geometry = geoData.body.features[0].geometry;
+    festival.geometry = geoData.body.features[0].geometry.type;
     festival.images = req.file.map(file => ({url: file.path, filename: file.filename}));
     festival.contributor = req.user._id;
     await festival.save();
