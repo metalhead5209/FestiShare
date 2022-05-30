@@ -16,9 +16,20 @@ const festivalSchema = new Schema({
     title: String,
     location: String,
     images: [ImgSchema],
-    location: String,
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     price: Number,
     description: String,
+    location: String,
     contributor: {
         type: Schema.Types.ObjectId,
         ref: 'User'

@@ -19,13 +19,14 @@ module.exports.createFest = async (req, res) => {
     query: req.body.festival.location,
     limit: 1
   }).send()
-  res.send(geoData.body.features[0].geometry.coordinates);
-  // const festival = new Festival(req.body.festival);
-  // festival.images = req.file.map(file => ({url: file.path, filename: file.filename}));
-  // festival.contributor = req.user._id;
-  // await festival.save();
-  // req.flash('success', 'Successfully created new Festival!');
-  // res.redirect(`/festivals/${festival._id}`);
+  const festival = new Festival(req.body.festival);
+  festival.geometry = geoData.body.features[0].geometry;
+  festival.images = req.files.map(file => ({url: file.path, filename: file.filename}));
+  festival.contributor = req.user._id;
+  await festival.save();
+  console.log(festival);
+  req.flash('success', 'Successfully created new Festival!');
+  res.redirect(`/festivals/${festival._id}`);
 };
 
 
