@@ -6,16 +6,34 @@
       color: blue;
       border-radius: 10px;
     }
+
+    .festPic {
+      border-radius: 10px;
+      filter: drop-shadow(0 0 0.25rem #48cae4);
+    }
+
+    #img {
+      border-radius: 10px;
+    }
+
+    .map {
+      border-radius: 10px;
+      filter: drop-shadow(0 0 0.25rem #48cae4);
+    }
+
+    .exp {
+      filter: drop-shadow(0 0 0.50rem #48cae4);
+    }
   </style>
 
 
     <div class="row">
         <div class="col-md-8">
-          <div id="festivalCarouselFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+          <div id="festivalCarouselFade" class="carousel slide carousel-fade festPic mb-3" data-bs-ride="carousel">
             <div class="carousel-inner">
               <% festival.images.forEach((img, i) => { %>
               <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
-                <img src="<%= img.url %>" class="d-block w-100" alt="">
+                <img id="img" src="<%= img.url %>" class="d-block w-100" alt="">
               </div>        
               <% }) %>    
             </div>
@@ -30,14 +48,14 @@
             </button>
             <% } %> 
           </div>
-            <div class="card mb-4">
+            <div class="card mb-4 bg-dark text-light">
                 <div class="card-body">
                   <h5 class="card-title"><%= festival.title %></h5>
                   <p class="card-text text-muted"><%= festival.location%></p>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><%= festival.description %></li>
-                  <li class="list-group-item">$<%= festival.price %>/ticket</li>
+                  <li class="list-group-item bg-dark text-light"><%= festival.description %></li>
+                  <li class="list-group-item bg-dark text-light">$<%= festival.price %>/ticket</li>
                 </ul>
                 <% if(currentUser && festival.contributor.equals(currentUser._id)) {%> 
                 <div class="card-body d-flex justify-content-sm-evenly">
@@ -60,10 +78,10 @@
         <div class="col-md-4 m">
           <div class="mb-4 ml-5 map" id='map' style='width: 100%; height: 54.1%;'></div>
           <% if(currentUser) {%> 
-          <h2>Share your Festival Experience</h2> <br />
+          <h2 class="bg-dark text-light">Share your Festival Experience</h2> <br />
           <div class="mb-5">
               <form action="/festivals/<%=festival._id%>/experiences" method="POST" class="mb-1 needs-validation" novalidate>
-                <div class="mb-1">
+                <div class="mb-1 bg-dark text-light">
                   <fieldset class="starability-heartbeat">
                     <input type="radio" id="no-rate" class="input-no-rate" name="experience[rating]" value="1" checked aria-label="No rating." />
                     <input type="radio" id="first-rate1" name="experience[rating]" value="1" />
@@ -79,15 +97,15 @@
                   </fieldset>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="body">Experience</label>
-                  <textarea class="form-control" name="experience[body]" id="body" cols="30" rows="5" required></textarea>
+                  <label class="form-label bg-dark text-light" for="body">Experience</label>
+                  <textarea class="form-control bg-dark text-light" name="experience[body]" id="body" cols="30" rows="5" required></textarea>
                 </div>
                 <button class="btn btn-success">Submit</button>
               </form>
               <% } %> 
-              <h2 class="mt-3">Experiences</h2>
+              <h2 class="mt-3 text-light">Experiences</h2>
               <% for (let experience of festival.experiences) { %> 
-                  <div class="card mb-3">
+                  <div class="card mb-3 bg-info text-dark exp">
                     <div class="card-body">
                       <h5 class="card-title"><%= experience.contributor.username %></h5>
                       <p class="starability-result" data-rating="<%= experience.rating %>">
@@ -112,5 +130,6 @@
     </script>
 
     <script src="/scripts/mapPage.js">
+    
 
     

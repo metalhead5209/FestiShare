@@ -3,13 +3,21 @@
 <% layout('layouts/boilerplate') %> 
     <h1>Festivals</h1>
 
+    <style>
+        #festimg {
+            border-radius: 10px;
+        }
 
-  
+        .festCard {
+            filter: drop-shadow(0 0 0.50rem #48cae4);
+        }
+    </style>
+    
         <% festivals.forEach(festival => { %>
-                <div class="card mb-5">
+                <div class="card mb-5 bg-dark text-light festCard">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="<%= festival.images[0].url %>" alt="fest" class="img-fluid">
+                            <img id="festimg" src="<%= festival.images[0].url %>" alt="fest" class="img-fluid">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -24,4 +32,6 @@
                     </div>
                 </div>
       <%  }) %> 
+
+
 

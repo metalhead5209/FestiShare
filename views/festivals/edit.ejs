@@ -4,31 +4,31 @@
         
 
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center bg-dark text-light">
             <h1 class="text-center">Edit Festival</h1>
             <div class="col-10">
                 <form action="/festivals/<%=festival._id%>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
                  <div>
                      <label class="form-label" for="title">Title</label>
-                     <input class="form-control" type="text" id="title" name="festival[title]"value="<%= festival.title %>" required>
+                     <input class="form-control bg-dark text-light" type="text" id="title" name="festival[title]"value="<%= festival.title %>" required>
                  </div>
                  <div>
                      <label class="form-label" for="location">Location</label>
-                     <input class="form-control" type="text" id="location" name="festival[location]"value="<%= festival.location %>" required>
+                     <input class="form-control bg-dark text-light" type="text" id="location" name="festival[location]"value="<%= festival.location %>" required>
                  </div>
                  <div class="mb-3">
                      <label class="form-label" for="price">Festival Price</label>
                  <div class="input-group mb-2">
                      <span class="input-group-text" id="price">$</span>
-                     <input type="text" class="form-control" placeholder="0.00" name="festival[price]"value="<%= festival.price %>" required>
+                     <input type="text" class="form-control bg-dark text-light" placeholder="0.00" name="festival[price]"value="<%= festival.price %>" required>
                  </div>
                  <div class="mb-3">
                      <label for="description" class="form-label">Description</label>
-                     <textarea class="form-control" id="description" rows="3" name="festival[description]" required><%= festival.description  %></textarea>
+                     <textarea class="form-control bg-dark text-light" id="description" rows="3" name="festival[description]" required><%= festival.description  %></textarea>
                    </div>
                    <div class="mb-3">
                     <label for="image" class="form-label">Choose Image(s)</label>
-                    <input class="form-control" type="file" id="image" name="image" multiple>
+                    <input class="form-control bg-dark text-light" type="file" id="image" name="image" multiple>
                   </div>
              </div>
              <div class="mb-3">

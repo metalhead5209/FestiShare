@@ -24,7 +24,6 @@ module.exports.createFest = async (req, res) => {
   festival.images = req.files.map(file => ({url: file.path, filename: file.filename}));
   festival.contributor = req.user._id;
   await festival.save();
-  console.log(festival);
   req.flash('success', 'Successfully created new Festival!');
   res.redirect(`/festivals/${festival._id}`);
 };
