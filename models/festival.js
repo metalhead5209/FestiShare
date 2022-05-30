@@ -16,17 +16,7 @@ const festivalSchema = new Schema({
     title: String,
     location: String,
     images: [ImgSchema],
-    geometry: {
-        type: {
-            type: String,
-            enum: ['Point'],
-            required: true
-        },
-        coordinates: {
-            type: [Number],
-            required: true
-        }
-    },
+    location: String,
     price: Number,
     description: String,
     contributor: {
