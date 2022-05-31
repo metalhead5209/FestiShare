@@ -54,10 +54,15 @@ module.exports.editPage = async (req, res) => {
 };
 
 module.exports.editFest = async (req, res) => {
+  const geoData = await geoCoder.forwardGeocode({
+    query: req.body.festival.location,
+    limit: 1
+  }).send()
     const { id } = req.params;
     const festival = await Festival.findByIdAndUpdate(id, { ...req.body.festival });
     const imgs = req.files.map(file => ({url: file.path, filename: file.filename}));
     festival.images.push(...imgs);
+    festival.geometry = geoData.body.features[0].geometry;
     await festival.save();
     if (req.body.deleteImages) {
       for(let filename of req.body.deleteImages) {
