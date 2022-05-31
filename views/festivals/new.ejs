@@ -5,26 +5,26 @@
            <div class="col-10">
             <form action="/festivals" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
                 <div>
-                    <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" id="title" name="festival[title]" required>
+                    <label class="form-label bg-dark text-light" for="title">Title</label>
+                    <input class="form-control bg-dark text-light" type="text" id="title" name="festival[title]" required>
                 </div>
                 <div>
-                    <label class="form-label" for="location">Location</label>
-                    <input class="form-control" type="text" id="location" name="festival[location]" required>
+                    <label class="form-label bg-dark text-light" for="location">Location</label>
+                    <input class="form-control bg-dark text-light" type="text" id="location" name="festival[location]" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="price">Festival Price</label>
+                    <label class="form-label bg-dark text-light" for="price">Festival Price</label>
                 <div class="input-group mb-2">
                     <span class="input-group-text" id="price">$</span>
-                    <input type="text" class="form-control" placeholder="0.00" name="festival[price]" required>
+                    <input type="text" class="form-control bg-dark text-light" placeholder="0.00" name="festival[price]" required>
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" rows="3" name="festival[description]" required></textarea>
+                    <label for="description" class="form-label bg-dark text-light">Description</label>
+                    <textarea class="form-control bg-dark text-light" id="description" rows="3" name="festival[description]" required></textarea>
                   </div>
                   <div class="mb-3">
-                    <label for="image" class="form-label">Choose Image(s)</label>
-                    <input class="form-control" type="file" id="image" name="image" multiple>
+                    <label for="image" class="form-label bg-dark text-light">Choose Image(s)</label>
+                    <input class="form-control bg-dark text-light" type="file" id="image" name="image" multiple>
                   </div>
             </div>
                 <button class="btn btn-success mb-3">Add Festival</button>
