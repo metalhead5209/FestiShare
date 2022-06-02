@@ -2,7 +2,7 @@
 mapboxgl.accessToken = mapBoxToken;
 const map = new mapboxgl.Map({
     container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/satellite-streets-v11', // style URL
+    style: 'mapbox://styles/mapbox/dark-v10', // style URL
     center: festival.geometry.coordinates, // starting position [lng, lat]
     zoom: 9 // starting zoom
  });
@@ -27,7 +27,7 @@ const popupOffsets = {
 };
 
 new mapboxgl.Marker({
-    color: '#ff0000'
+    color: '#48cae4'
 }).setLngLat(festival.geometry.coordinates)
     .setPopup(
         new mapboxgl.Popup({offset: popupOffsets, className: 'my-class'})

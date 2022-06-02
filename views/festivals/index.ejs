@@ -1,18 +1,27 @@
 
    
 <% layout('layouts/boilerplate') %> 
-    <h1>Festivals</h1>
 
-    <style>
-        #festimg {
-            border-radius: 10px;
-        }
+<style>
+    #festimg {
+        border-radius: 5px;
+    }
 
-        .festCard {
-            filter: drop-shadow(0 0 0.50rem #48cae4);
-        }
-    </style>
-    
+    .festCard {
+        filter: drop-shadow(0 0 0.50rem #48cae4);
+    }
+
+    #map {
+        filter: drop-shadow(0 0 0.50rem #48cae4);
+    }
+</style>
+
+
+
+<div id="map" style="width: 100%; height: 400px; border-radius: 10px"></div>3
+
+    <h1 class="text-light">Festivals</h1>
+
         <% festivals.forEach(festival => { %>
                 <div class="card mb-5 bg-dark text-light festCard">
                     <div class="row">
@@ -33,5 +42,9 @@
                 </div>
       <%  }) %> 
 
+      <script>
+        const mapBoxToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const festivals = {features: <%- JSON.stringify(festivals) %>};
+      </script>
 
-
+<script src="/scripts/mapCluster.js"></script>

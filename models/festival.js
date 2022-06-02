@@ -11,6 +11,7 @@ ImgSchema.virtual('thumbnail').get(function() {
     return this.url.replace('/upload', '/upload/w_200');
 })
 
+const options = { toJSON: { virtuals: true} };
 
 const festivalSchema = new Schema({
     title: String,
@@ -40,9 +41,18 @@ const festivalSchema = new Schema({
             ref: 'Experience'
         }
     ]
+}, options);
+
+festivalSchema.virtual('properties.popUpMarkup').get(function () {
+    return `<strong><a href="/festivals/${this._id}">${this.title}</a></strong>
+    <p>${this.location}</p>
+    <style>
+        a {
+            text-decoration: none;
+            color: #48cae4;
+        }
+    </style>`
 });
-
-
 
 festivalSchema.post('findOneAndDelete', async function (doc) {
     if(doc) {
