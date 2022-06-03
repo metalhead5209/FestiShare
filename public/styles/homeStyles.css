@@ -223,7 +223,7 @@
     transition: color 0.4s ease;
   }
 
-  .imgLogo {
+  #imgLogo {
     height: 5rem;
     width: 6rem;
     filter: drop-shadow(0 0 0.9rem #48cae4);
@@ -243,11 +243,11 @@
   
   @media only screen and (max-width: 450px ) {
     .show:before {
-        background-image: url(/FS-mobile-BG.png) ;
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/FS-mobile-BG.png) ;
     }
 
     .show h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       position: relative;
       top: -20%;
     }
@@ -257,12 +257,16 @@
       top: -15%;
     }
 
+    strong {
+      font-size: 1.5rem;
+    }
+
     .btn {
       position: relative;
       top: -10%;
     }
 
-    .imgLogo {
+    #imgLogo {
       height: 4rem;
       width: 4rem;
     } 
