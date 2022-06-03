@@ -1,63 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YelpCamp</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="stylesheet" href="/styles/homeStyles.css">
-</head>
-
-<body class="d-flex text-center text-white bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto" id="topnav">
-            <div>
-                <h3 class="float-md-left mb-0">FestiShare</h3>
-                <nav class="nav nav-masthead justify-content-center float-md-right">
-                    <a class="nav-link" href="/festivals">Festivals</a>
-                    <% if(!currentUser) { %>
-                    <a class="nav-link" href="/login">Login</a>
-                    <a class="nav-link" href="/register">Register</a>
-                    <% } else { %>
-                    <a class="nav-link" href="/logout">Logout</a>
-                    <% } %>
-                </nav>
-            </div>
-        </header>
-        <main class="px-3">
-            <h1>FestiShare</h1>
-            <p class="lead"> Welcome to FestiShare! <br> A place to share your Festival Experience <br>
-                Don't see your favorite festival? No worries! Add it along with your favorite pics from the fest!</p>
-            <a href="/festivals" class="btn btn-lg btn-info font-weight-bold border-white bg-info">View
-                Festivals</a>
-        </main>
-
-        <footer class="mt-auto text-light-50">
-            <p>&copy; 2022 </p>
-        </footer>
-
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/styles/homeStyles.css" />
+    <title>FestiShare</title>
+  </head>
+  <body>
+    <div class="outer-menu">
+      <input type="checkbox" class="toggle" />
+      <div class="hamburger"><div></div></div>
+      <div class="menu">
+        <div>
+          <div>
+            <ul>
+               <li> <a href="/festivals">Festivals</a> </li>
+                <% if(!currentUser) { %>
+                <li> <a href="/login">Login</a> </li>
+                <li><a href="/register">Register</a> </li>
+                <% } else { %>
+                <li><a href="/logout">Logout</a> </li>
+                <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        function myFunction() {
-  var x = document.getElementById("myLinks");
-  if (x.style.display === "block") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
-  }
-}
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-        crossorigin="anonymous"></script>
-</body>
-
+    <header class="show">
+      <div class="container show-inner">
+        <h1>FestiShare</h1>
+        <p>
+          <strong>Welcome to FestiShare! <br>
+          A place to share your festival experience(s)</strong>
+        </p>
+        <a href="/festivals" class="btn">Go To Festivals</a>
+      </div>
+    </header>
+  </body>
 </html>
