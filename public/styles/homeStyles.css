@@ -1,4 +1,4 @@
-/* CORE STYLES */
+
 :root {
     --primary-color: rgba(13, 110, 139, 0.75);
     --overlay-color: rgba(29, 30, 31, 0.85);
@@ -81,7 +81,7 @@
     transition: 0.4s ease;
   }
   
-  /* MENU STYLES */
+
   .outer-menu {
     position: fixed;
     top: 0;
@@ -114,7 +114,7 @@
     justify-content: center;
   }
   
-  /* Hamburger Line */
+ 
   .outer-menu .hamburger > div {
     position: relative;
     flex: none;
@@ -127,7 +127,7 @@
     transition: all 0.4s ease;
   }
   
-  /* Hamburger Lines - Top & Bottom */
+
   .outer-menu .hamburger > div::before,
   .outer-menu .hamburger > div::after {
     content: '';
@@ -139,29 +139,29 @@
     background: inherit;
   }
   
-  /* Moves Line Down */
+
   .outer-menu .hamburger > div::after {
     top: 10px;
   }
-  
-  /* toggle Animation */
+
+
   .outer-menu.toggle:checked + .hamburger > div {
     transform: rotate(135deg);
   }
   
-  /* Turns Lines Into X */
+ 
   .outer-menu .toggle:checked + .hamburger > div:before,
   .outer-menu .toggle:checked + .hamburger > div:after {
     top: 0;
     transform: rotate(90deg);
   }
   
-  /* Rotate On Hover When Checked */
+
   .outer-menu .toggle:checked:hover + .hamburger > div {
     transform: rotate(225deg);
   }
   
-  /* Show Menu */
+
   .outer-menu .toggle:checked ~ .menu {
     visibility: visible;
   }
@@ -222,6 +222,24 @@
     text-decoration: none;
     transition: color 0.4s ease;
   }
+
+  .imgLogo {
+    height: 5rem;
+    width: 6rem;
+    filter: drop-shadow(0 0 0.9rem #48cae4);
+    position: fixed;
+    top: .1%;
+    right: .1%;
+
+
+  }
+
+  footer {
+    text-align: center;
+    position: absolute;
+    bottom: 3%;
+    
+  }
   
   @media only screen and (max-width: 450px ) {
     .show:before {
@@ -243,5 +261,10 @@
       position: relative;
       top: -10%;
     }
+
+    .imgLogo {
+      height: 4rem;
+      width: 4rem;
+    } 
   } 
   

@@ -15,13 +15,13 @@
         <div>
           <div>
             <ul>
-               <li> <a href="/festivals">Festivals</a> </li>
-                <% if(!currentUser) { %>
-                <li> <a href="/login">Login</a> </li>
-                <li><a href="/register">Register</a> </li>
-                <% } else { %>
-                <li><a href="/logout">Logout</a> </li>
-                <% } %>
+              <li><a href="/festivals">Festivals</a></li>
+              <% if(!currentUser) { %>
+              <li><a href="/login">Login</a></li>
+              <li><a href="/register">Register</a></li>
+              <% } else { %>
+              <li><a href="/logout">Logout</a></li>
+              <% } %>
             </ul>
           </div>
         </div>
@@ -31,12 +31,21 @@
     <header class="show">
       <div class="container show-inner">
         <h1>FestiShare</h1>
+        <img src="/logo.png" class="imgLogo">
         <p>
-          <strong>Welcome to FestiShare! <br>
-          A place to share your festival experience(s)</strong>
+          <strong
+            >Welcome to FestiShare! <br />
+            A place to share your festival experience(s)</strong
+          >
         </p>
         <a href="/festivals" class="btn">Go To Festivals</a>
+        <footer>
+          <span>&copy FestiShare 2022 by Aaron Rodi</span>
+        </footer>
       </div>
     </header>
   </body>
+ 
 </html>
+
+

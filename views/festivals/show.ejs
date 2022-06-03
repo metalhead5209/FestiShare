@@ -69,9 +69,6 @@
                 <div class="card-footer text-muted">
                   Contributor: <%= festival.contributor.username %>
               </div>
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>  
               </div> 
               <a href="/festivals" class="btn btn-info mb-5">All Festivals</a>
               <div class="col-md-12">
@@ -96,11 +93,13 @@
               </div>
         </div>
         <div class="col-md-4 m">
-          <div class="mb-4 ml-5 map" id='map' style='width: 100%; height: 30%;'></div>
+          <h2 class="mt-2 mb-3 text-light">FestiMap</h2>
+          <div class="mb-4 ml-5 map" id='map' style='width: 100%; height: 20rem;'></div>
           <% if(currentUser) {%> 
           <h2 class="bg-dark text-light">Share your Festival Experience</h2> <br />
           <div class="mb-5">
               <form action="/festivals/<%=festival._id%>/experiences" method="POST" class="mb-1 needs-validation" novalidate>
+                <p class="lead text-light">Leave a Rating!</p>
                 <div class="mb-1 bg-dark text-light">
                   <fieldset class="starability-heartbeat">
                     <input type="radio" id="no-rate" class="input-no-rate" name="experience[rating]" value="1" checked aria-label="No rating." />
@@ -118,12 +117,12 @@
                 </div>
                 <div class="mb-3">
                   <label class="form-label bg-dark text-light" for="body">Experience</label>
-                  <textarea class="form-control bg-dark text-light" name="experience[body]" id="body" cols="30" rows="5" required></textarea>
+                  <textarea class="form-control bg-dark text-light" name="experience[body]" id="body" cols="30" rows="10" required></textarea>
                 </div>
                 <button class="btn btn-success">Submit</button>
               </form>
               <% } %> 
-             
+            
               <% for (let experience of festival.experiences) { %> 
                   <!-- <div class="card mb-5 bg-info text-dark exp">
                     <div class="card-body">
@@ -136,9 +135,9 @@
                       <% if(currentUser && experience.contributor.equals(currentUser._id)) {%> 
                       <form action="/festivals/<%=festival._id%>/experiences/<%=experience.id%>?_method=DELETE" method="POST">
                         <button class="btn btn-sm btn-danger">Delete</button>
-                      </form> -->
+                      </form>
                       <% } %> 
-                    </div>
+                    </div> -->
                 </div>
                <% } %>
         </div>
