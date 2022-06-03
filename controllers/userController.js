@@ -13,7 +13,7 @@ module.exports.registerRoute = async (req, res) => {
     req.login(newUser, err => {
         if (err) return next(err);
         req.flash('success','Welcome');
-        res.redirect('/');
+        res.redirect('/festivals');
     })
     } catch (e) {
         req.flash('error', e.message);
@@ -29,7 +29,7 @@ module.exports.loginRoute = (req, res) => {
     req.flash('success', 'welcome back');
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
-    res.redirect('/');
+    res.redirect('/festivals');
 }
 
 module.exports.logoutRoute = (req, res) => {
