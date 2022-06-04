@@ -18,7 +18,7 @@ const localStrat = require('passport-local');
 const User = require('./models/user');
 
 
-// const DbURL = process.env.DB_URL;
+
 
 // IMPORT ROUTERS
 const userRoutes = require('./routes/userRoutes');
@@ -26,8 +26,8 @@ const festiRoutes = require('./routes/festiRoutes');
 const experienceRoutes = require('./routes/experienceRoutes');
 
 // DB CONNECTION
-// const DB = "mongodb://127.0.0.1:27017/festiShare";
-const DbURL = "mongodb://127.0.0.1:27017/festiShare";
+
+const DbURL = process.env.DB_URL || "mongodb://127.0.0.1:27017/festiShare";
 
 mongoose.connect(
   DbURL,
@@ -51,11 +51,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 
+const secret = process.env.SECRET || 'poop';
+
 const store = new MongoStore({
   url: DbURL,
-  secret: 'poop',
+  secret,
   touchAfter: 24 * 60 * 60
 });
+
 
 store.on('error', function (e) {
   console.log("SESSION STORE ERROR")
@@ -63,7 +66,8 @@ store.on('error', function (e) {
 
 const sesConfig = {
   store,
-  secret: 'icantwaittobeemployed',
+  name: 'session',
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
