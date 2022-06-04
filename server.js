@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const mongoose = require("mongoose");
 const ExpressError = require('./utilities/ExpressError');
@@ -15,6 +16,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const passport = require('passport');
 const localStrat = require('passport-local');
 const User = require('./models/user');
+
+
 // const DbURL = process.env.DB_URL;
 
 // IMPORT ROUTERS
@@ -23,10 +26,11 @@ const festiRoutes = require('./routes/festiRoutes');
 const experienceRoutes = require('./routes/experienceRoutes');
 
 // DB CONNECTION
-const DB = "mongodb://127.0.0.1:27017/festiShare";
+// const DB = "mongodb://127.0.0.1:27017/festiShare";
+const DbURL = "mongodb://127.0.0.1:27017/festiShare";
 
 mongoose.connect(
-  DB,
+  DbURL,
   () => {
     console.log("CONNECTED TO DB");
   },
@@ -47,12 +51,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 
+const store = new MongoStore({
+  url: DbURL,
+  secret: 'poop',
+  touchAfter: 24 * 60 * 60
+});
+
+store.on('error', function (e) {
+  console.log("SESSION STORE ERROR")
+})
+
 const sesConfig = {
+  store,
   secret: 'icantwaittobeemployed',
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
+    // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
