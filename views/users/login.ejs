@@ -1,13 +1,19 @@
 <% layout('layouts/boilerplate') %>
-<h1 class="text-light text-center">Login</h1>
-<form action="/login" method="POST" class="needs-validation" novalidate>
-    <div class="mb-3">
-        <label for="username" class="form-label bg-dark text-light">Username</label>
-        <input type="text" class="form-control bg-dark text-light col-md-4" id="" name="username" required>
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label bg dark text-light">Password</label>
-        <input type="password" class="form-control bg-dark text-light" id="password" name="password" required>
-        <button class="btn btn-success mt-2">Login</button>
-    </div>
-</form>
+
+<div class="container d-flex justify-content-center align-items-center"> 
+    <div class="row col-md-6">
+        <h1 class="text-light text-center">Login</h1>
+        <form action="/login" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label bg-dark text-light">Username</label>
+                <input type="text" class="form-control bg-dark text-light" id="" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label bg dark text-light">Password</label>
+                <input type="password" class="form-control bg-dark text-light" id="password" name="password" required>
+                <button class="btn btn-success mt-2">Login</button>
+            </div>
+        </form>
+        </div>
+</div>
+

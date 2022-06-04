@@ -16,12 +16,12 @@
           <div>
             <img src="/logo.png" class="imgLogo">
             <ul>
-              <li><a href="/festivals">Festivals</a></li>
+              <li class="nav-link"><a href="/festivals">Festivals</a></li>
               <% if(!currentUser) { %>
-              <li><a href="/login">Login</a></li>
-              <li><a href="/register">Register</a></li>
+              <li class="nav-link"><a href="/login">Login</a></li>
+              <li class="nav-link"><a href="/register">Register</a></li>
               <% } else { %>
-              <li><a href="/logout">Logout</a></li>
+              <li class="nav-link"><a href="/logout">Logout</a></li>
               <% } %>
             </ul>
           </div>
