@@ -120,7 +120,7 @@ app.use((err, req, res, next) => {
 
 
 // PORT
-const PORT = 5252;
+const PORT = process.env.PORT || 5252;
 app.listen(PORT, () => {
-  console.log("LISTENING ON PORT 5252");
+  console.log(`Connected to Port ${PORT}`);
 });
