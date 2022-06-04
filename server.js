@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const ExpressError = require('./utilities/ExpressError');
 const ejsMate = require('ejs-mate');
 const methodOverride = require("method-override");
+const mongoSanitize = require('express-mongo-sanitize');
 const passport = require('passport');
 const localStrat = require('passport-local');
 const User = require('./models/user');
@@ -42,6 +43,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+app.use(mongoSanitize());
 
 const sesConfig = {
   secret: 'icantwaittobeemployed',
