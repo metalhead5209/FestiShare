@@ -15,6 +15,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const passport = require('passport');
 const localStrat = require('passport-local');
 const User = require('./models/user');
+// const DbURL = process.env.DB_URL;
 
 // IMPORT ROUTERS
 const userRoutes = require('./routes/userRoutes');
@@ -23,6 +24,7 @@ const experienceRoutes = require('./routes/experienceRoutes');
 
 // DB CONNECTION
 const DB = "mongodb://127.0.0.1:27017/festiShare";
+
 mongoose.connect(
   DB,
   () => {
