@@ -126,20 +126,7 @@
                 <% } %> 
             
               <% for (let experience of festival.experiences) { %> 
-                  <!-- <div class="card mb-5 bg-info text-dark exp">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= experience.contributor.username %></h5>
-                      <p class="starability-result" data-rating="<%= experience.rating %>">
-                        Rated: <%= experience.rating %> 
-                      </p>
-                      <p class="card-text"><%= experience.body %> </p>
-                      <p class="cart-text text-muted"><b>Contributed By: </b><%= experience.contributor.username %></p>
-                      <% if(currentUser && experience.contributor.equals(currentUser._id)) {%> 
-                      <form action="/festivals/<%=festival._id%>/experiences/<%=experience.id%>?_method=DELETE" method="POST">
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                      </form>
-                      <% } %> 
-                    </div> -->
+                  
                 </div>
                <% } %>
         </div>
