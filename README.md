@@ -1,6 +1,6 @@
 # FestiShare
 'A place to share your festival experience'
-[Demo](https://festishare-production.up.railway.app/ "Demo" target="_blank")
+[Demo](https://festishare-production.up.railway.app/)
 
 Node | Express | MongoDB | Mongoose | EJS | JavaScript | BootStrap
    Joi | Cloudinary | MapBox | Morgan | Passport Auth | Multer
